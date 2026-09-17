@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *, .dark-hc, .dark-hc *));
+
+@theme {
+  --color-monopro-50: oklch(98% 0.002 240);
+  --color-monopro-100: oklch(95% 0.004 240);
+  --color-monopro-200: oklch(88% 0.006 240);
+  --color-monopro-400: oklch(70% 0.008 240);
+  --color-monopro-600: oklch(45% 0.010 240);
+  --color-monopro-950: oklch(15% 0.015 240);
+  --color-brand-100: oklch(93% 0.045 165);
+  --color-brand-400: oklch(65% 0.135 165);
+  --color-brand-600: oklch(52% 0.155 165);
+  --color-brand-700: oklch(42% 0.135 165);
+  --color-brand-800: oklch(32% 0.115 165);
+  --color-brand-hc-100: oklch(0% 0 0);
+  --color-brand-hc-400: oklch(100% 0 0);
+  --color-brand-hc-600: oklch(90% 0.190 95);
+  --color-brand-hc-700: oklch(100% 0 0);
+  --color-brand-hc-800: oklch(100% 0 0);
+}
+
+.dark {
+  --color-monopro-50: oklch(18% 0.012 240);
+  --color-monopro-100: oklch(24% 0.014 240);
+  --color-monopro-200: oklch(32% 0.016 240);
+  --color-monopro-400: oklch(62% 0.012 240);
+  --color-monopro-600: oklch(78% 0.010 240);
+  --color-monopro-950: oklch(96% 0.004 240);
+  --color-brand-100: oklch(30% 0.065 165);
+  --color-brand-400: oklch(72% 0.145 165);
+  --color-brand-600: oklch(75% 0.155 165);
+  --color-brand-700: oklch(84% 0.125 165);
+  --color-brand-800: oklch(90% 0.095 165);
+}
+
+.dark-hc {
+  --color-monopro-50: oklch(0% 0 0);
+  --color-monopro-100: oklch(0% 0 0);
+  --color-monopro-200: oklch(100% 0 0);
+  --color-monopro-400: oklch(100% 0 0);
+  --color-monopro-600: oklch(100% 0 0);
+  --color-monopro-950: oklch(100% 0 0);
+  --color-brand-100: var(--color-brand-hc-100);
+  --color-brand-400: var(--color-brand-hc-400);
+  --color-brand-600: var(--color-brand-hc-600);
+  --color-brand-700: var(--color-brand-hc-700);
+  --color-brand-800: var(--color-brand-hc-800);
+}
+
+body {
+  @apply bg-monopro-50 text-monopro-950 font-sans;
+}
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
