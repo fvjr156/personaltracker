@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 
-const defaultMenuItems: Record<string, string> = {
+export const defaultMenuItems: Record<string, string> = {
   '01-001': 'Programming Work ID',
   '01-002': 'Computer Non-Work ID',
   '02-001': 'Employment Duty OD',
@@ -16,23 +16,34 @@ interface ScrollMenuProps {
   onSelect: (code: string, text: string) => void;
 }
 
+function loadMenuData(): Record<string, string> {
+  const storedItems = localStorage.getItem('menuitems')
+
+  if (!storedItems) {
+    localStorage.setItem('menuitems', JSON.stringify(defaultMenuItems))
+    return defaultMenuItems
+  }
+
+  try {
+    const parsed = JSON.parse(storedItems) as Record<string, string>
+    return parsed && Object.keys(parsed).length > 0 ? parsed : defaultMenuItems
+  } catch {
+    return defaultMenuItems
+  }
+}
+
 export default function ScrollMenu({ selectedCode, onSelect }: ScrollMenuProps) {
   const [menuData, setMenuData] = useState<Record<string, string>>(defaultMenuItems)
 
   useEffect(() => {
-    const storedItems = localStorage.getItem('menuitems')
+    setMenuData(loadMenuData())
 
-    if (!storedItems) {
-      localStorage.setItem('menuitems', JSON.stringify(defaultMenuItems))
-      setMenuData(defaultMenuItems)
-      return
+    const onMenuItemsUpdated = () => {
+      setMenuData(loadMenuData())
     }
 
-    try {
-      setMenuData(JSON.parse(storedItems) as Record<string, string>)
-    } catch {
-      setMenuData(defaultMenuItems)
-    }
+    window.addEventListener('menuitems:updated', onMenuItemsUpdated)
+    return () => window.removeEventListener('menuitems:updated', onMenuItemsUpdated)
   }, [])
 
   return (

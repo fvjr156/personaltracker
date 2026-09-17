@@ -8,9 +8,13 @@ export type TrackerEntry = {
   timestamp: string;
 };
 
+type UseTrackerHistoryOptions = {
+  onStatus?: (message: string) => void;
+};
+
 const STORAGE_KEY = "personaltracker-history";
 
-export function useTrackerHistory() {
+export function useTrackerHistory({ onStatus }: UseTrackerHistoryOptions = {}) {
   const [history, setHistory] = useState<TrackerEntry[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -36,6 +40,12 @@ export function useTrackerHistory() {
       timestamp: new Date().toISOString(),
     };
 
+    const statusMessage = `Tagged ${codeStr} - ${text}.`;
+    onStatus?.(statusMessage);
+    document.title = `Tagged ${codeStr}`;
+    setTimeout(() => {
+      document.title = `personaltracker`;
+    }, 1000);
     setHistory((prev) => [newEntry, ...prev]);
   };
 
